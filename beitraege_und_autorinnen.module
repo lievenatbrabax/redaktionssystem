@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Beiträge und Autorinnen feature.
+ */
+
+include_once 'beitraege_und_autorinnen.features.inc';
