@@ -491,10 +491,10 @@ function beitraege_und_autorinnen_views_default_views() {
   $handler->display->display_options['pager']['type'] = 'none';
   $handler->display->display_options['style_plugin'] = 'default';
   $handler->display->display_options['row_plugin'] = 'fields';
-  /* Beziehung: Inhalt: Material (field_material) - reverse */
-  $handler->display->display_options['relationships']['reverse_field_material_node']['id'] = 'reverse_field_material_node';
-  $handler->display->display_options['relationships']['reverse_field_material_node']['table'] = 'node';
-  $handler->display->display_options['relationships']['reverse_field_material_node']['field'] = 'reverse_field_material_node';
+  /* Beziehung: Inhalt: Material / Materialblock (field_material_materialblock) - reverse */
+  $handler->display->display_options['relationships']['reverse_field_material_materialblock_node']['id'] = 'reverse_field_material_materialblock_node';
+  $handler->display->display_options['relationships']['reverse_field_material_materialblock_node']['table'] = 'node';
+  $handler->display->display_options['relationships']['reverse_field_material_materialblock_node']['field'] = 'reverse_field_material_materialblock_node';
   /* Feld: Inhalt: Titel */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
@@ -525,6 +525,7 @@ function beitraege_und_autorinnen_views_default_views() {
 
   /* Display: Materialseite */
   $handler = $view->new_display('page', 'Materialseite', 'page');
+  $handler->display->display_options['defaults']['relationships'] = FALSE;
   $handler->display->display_options['path'] = 'material';
 
   /* Display: Block: Material */
@@ -635,6 +636,68 @@ function beitraege_und_autorinnen_views_default_views() {
   $handler->display->display_options['filters']['type']['value'] = array(
     'beitrag' => 'beitrag',
   );
+
+  /* Display: Block: übergeordnete Materialseite */
+  $handler = $view->new_display('block', 'Block: übergeordnete Materialseite', 'block_3');
+  $handler->display->display_options['defaults']['title'] = FALSE;
+  $handler->display->display_options['title'] = 'übergeordnete Materialseite';
+  $handler->display->display_options['defaults']['group_by'] = FALSE;
+  $handler->display->display_options['defaults']['relationships'] = FALSE;
+  /* Beziehung: Inhalt: Material / Materialblock (field_material_materialblock) */
+  $handler->display->display_options['relationships']['field_material_materialblock_nid']['id'] = 'field_material_materialblock_nid';
+  $handler->display->display_options['relationships']['field_material_materialblock_nid']['table'] = 'field_data_field_material_materialblock';
+  $handler->display->display_options['relationships']['field_material_materialblock_nid']['field'] = 'field_material_materialblock_nid';
+  $handler->display->display_options['relationships']['field_material_materialblock_nid']['delta'] = '-1';
+  $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Feld: Inhalt: Titel */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['label'] = '';
+  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
+  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['title']['hide_empty'] = TRUE;
+  $handler->display->display_options['defaults']['arguments'] = FALSE;
+  /* Kontextfilter: Inhalt: Beitrags-ID */
+  $handler->display->display_options['arguments']['nid']['id'] = 'nid';
+  $handler->display->display_options['arguments']['nid']['table'] = 'node';
+  $handler->display->display_options['arguments']['nid']['field'] = 'nid';
+  $handler->display->display_options['arguments']['nid']['relationship'] = 'field_material_materialblock_nid';
+  $handler->display->display_options['arguments']['nid']['default_action'] = 'default';
+  $handler->display->display_options['arguments']['nid']['exception']['title'] = 'Alle';
+  $handler->display->display_options['arguments']['nid']['default_argument_type'] = 'node';
+  $handler->display->display_options['arguments']['nid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['nid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['nid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['defaults']['filter_groups'] = FALSE;
+  $handler->display->display_options['defaults']['filters'] = FALSE;
+  /* Filterkriterium: Inhalt: Veröffentlicht */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'node';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = 1;
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filterkriterium: Inhalt: Typ */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['relationship'] = 'field_material_materialblock_nid';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'material' => 'material',
+  );
+  $handler->display->display_options['filters']['type']['expose']['operator_id'] = 'type_op';
+  $handler->display->display_options['filters']['type']['expose']['label'] = 'Typ';
+  $handler->display->display_options['filters']['type']['expose']['operator'] = 'type_op';
+  $handler->display->display_options['filters']['type']['expose']['identifier'] = 'type';
+  /* Filterkriterium: Inhalt: Typ */
+  $handler->display->display_options['filters']['type_1']['id'] = 'type_1';
+  $handler->display->display_options['filters']['type_1']['table'] = 'node';
+  $handler->display->display_options['filters']['type_1']['field'] = 'type';
+  $handler->display->display_options['filters']['type_1']['value'] = array(
+    'materialsammlung' => 'materialsammlung',
+  );
   $translatables['material'] = array(
     t('Master'),
     t('Material'),
@@ -644,14 +707,18 @@ function beitraege_und_autorinnen_views_default_views() {
     t('Sortieren nach'),
     t('Aufsteigend'),
     t('Absteigend'),
-    t('field_material'),
+    t('field_material_materialblock'),
     t('Materialseite'),
     t('Block: Material'),
     t('Block: Material zum Beitrag'),
     t('Material zum Beitrag'),
+    t('field_material'),
     t('Alle'),
     t('Block: Beiträge zum Material'),
     t('übergeordneter Beitrag'),
+    t('Block: übergeordnete Materialseite'),
+    t('übergeordnete Materialseite'),
+    t('Typ'),
   );
   $export['material'] = $view;
 
