@@ -157,6 +157,7 @@ function beitraege_und_autorinnen_views_default_views() {
   $handler->display->display_options['filters']['type']['field'] = 'type';
   $handler->display->display_options['filters']['type']['value'] = array(
     'beitrag' => 'beitrag',
+    'materialsammlung' => 'materialsammlung',
   );
 
   /* Display: Block: Alle Autor_innen */
@@ -444,6 +445,61 @@ function beitraege_und_autorinnen_views_default_views() {
     'autor_in' => 'autor_in',
     'beitrag' => 'beitrag',
   );
+
+  /* Display: Block: Zitation */
+  $handler = $view->new_display('block', 'Block: Zitation', 'block_4');
+  $handler->display->display_options['defaults']['title'] = FALSE;
+  $handler->display->display_options['title'] = 'Zitation';
+  $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Feld: Inhalt: Autor_in */
+  $handler->display->display_options['fields']['field_autor_in']['id'] = 'field_autor_in';
+  $handler->display->display_options['fields']['field_autor_in']['table'] = 'field_data_field_autor_in';
+  $handler->display->display_options['fields']['field_autor_in']['field'] = 'field_autor_in';
+  $handler->display->display_options['fields']['field_autor_in']['label'] = '';
+  $handler->display->display_options['fields']['field_autor_in']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_autor_in']['type'] = 'node_reference_plain';
+  $handler->display->display_options['fields']['field_autor_in']['delta_offset'] = '0';
+  /* Feld: Inhalt: Titel */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['label'] = '';
+  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
+  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
+  /* Feld: Inhalt: URI */
+  $handler->display->display_options['fields']['field_uri']['id'] = 'field_uri';
+  $handler->display->display_options['fields']['field_uri']['table'] = 'field_data_field_uri';
+  $handler->display->display_options['fields']['field_uri']['field'] = 'field_uri';
+  $handler->display->display_options['defaults']['arguments'] = FALSE;
+  /* Kontextfilter: Inhalt: Beitrags-ID */
+  $handler->display->display_options['arguments']['nid']['id'] = 'nid';
+  $handler->display->display_options['arguments']['nid']['table'] = 'node';
+  $handler->display->display_options['arguments']['nid']['field'] = 'nid';
+  $handler->display->display_options['arguments']['nid']['default_action'] = 'default';
+  $handler->display->display_options['arguments']['nid']['exception']['title'] = 'Alle';
+  $handler->display->display_options['arguments']['nid']['default_argument_type'] = 'node';
+  $handler->display->display_options['arguments']['nid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['nid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['nid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['defaults']['filter_groups'] = FALSE;
+  $handler->display->display_options['defaults']['filters'] = FALSE;
+  /* Filterkriterium: Inhalt: Veröffentlicht */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'node';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = 1;
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filterkriterium: Inhalt: Typ */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'beitrag' => 'beitrag',
+    'materialsammlung' => 'materialsammlung',
+  );
   $translatables['beitraege'] = array(
     t('Master'),
     t('Beiträge'),
@@ -461,6 +517,9 @@ function beitraege_und_autorinnen_views_default_views() {
     t('Autorenbeiträge'),
     t('field_autor_in'),
     t('Block Autorenbeiträge Autor'),
+    t('Block: Zitation'),
+    t('Zitation'),
+    t('URI'),
   );
   $export['beitraege'] = $view;
 
